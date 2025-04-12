@@ -89,6 +89,9 @@ public class testDB {
             } else {
                 System.out.println("Student with ID " + id + " not found.");
             }
+
+            Student updatedStudent = new Student(id, newName, newAge);
+            Students.add(updatedStudent);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -97,7 +100,7 @@ public class testDB {
     }
 
     // DELETE A RECORD
-    public static void delete( int id) {
+    public static void delete(int id) {
         Connection conn = connect();
         String deleteQuery = "DELETE FROM Student WHERE studentID = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
@@ -106,7 +109,7 @@ public class testDB {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Student with ID " + id + " was deleted successfully");
-                
+
             } else {
                 System.out.println("Student with ID " + id + " was not found");
             }
@@ -122,7 +125,6 @@ public class testDB {
         if (conn != null) {
             try {
                 conn.close();
-                System.out.println("Connection closed");
             } catch (SQLException e) {
                 System.out.println("Failed to close connection: " + e.getMessage());
             }

@@ -33,8 +33,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         testDB.readTable();
-        testDB.delete(999);
-        testDB.readTable();
+        testDB.update(1004, "TRIZY NICDAO", 19);
         launch();
     }
 
