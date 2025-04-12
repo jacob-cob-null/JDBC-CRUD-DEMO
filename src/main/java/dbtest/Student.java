@@ -13,17 +13,20 @@ public class Student {
     int studentID;
     String studentName;
     int studentAge;
+    String section;
 
     //complete attributes
-    public Student(int studentID, String studentName, int studentAge) {
+    public Student(int studentID, String studentName, int studentAge, String section) {
         this.studentID = studentID;
         this.studentName = studentName;
         this.studentAge = studentAge;
+        this.section = section;
     }
     //Creating records
-    public Student(String studentName, int studentAge) {
+    public Student(String studentName, int studentAge, String section) {
         this.studentName = studentName;
         this.studentAge = studentAge;
+        this.section = section;
     }
 
     //only id
@@ -60,6 +63,7 @@ public class Student {
     public String toString() {
         return "Student ID: " + this.studentID
                 + "\nName: " + this.studentName
-                + "\nAge: " + this.studentAge;
+                + "\nAge: " + this.studentAge
+                + "\nSection: " + this.section;
     }
 }
