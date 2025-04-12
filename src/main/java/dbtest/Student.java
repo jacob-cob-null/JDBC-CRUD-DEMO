@@ -9,5 +9,18 @@ package dbtest;
  * @author Jacob
  */
 public class Student {
+    int studentID;
+    String studentName;
+    int studentAge;
     
+    //complete attributes
+    public Student(int studentID, String studentName, int studentAge){
+        this.studentID = studentID;
+        this.studentName = studentName;
+        this.studentAge = studentAge;
+    }
+    //only id
+    public Student(int studentID) {
+        this.studentID = studentID;
+    }
 }
