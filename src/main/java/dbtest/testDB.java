@@ -140,7 +140,38 @@ public class testDB {
             closeConnection(conn);
         }
     }
+
     // JOIN TABLE AND GET ATTRIBUTE OF OTHER TABLE
+    public static void showJoinTable() {
+        Connection conn = connect();
+        String query = "SELECT Student.StudentID,\n"
+                + "       Student.StudentName,\n"
+                + "       Student.section,\n"
+                + "       Section.teacherName\n"
+                + "  FROM Student\n"
+                + "       JOIN\n"
+                + "       Section ON Student.section = Section.section;";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("studentID");
+                String name = rs.getString("studentName");
+                String section = rs.getString("section");
+                String teacher = rs.getString("teacherName");
+
+                System.out.println("ID: " + id
+                        + " | Name: " + name
+                        + " | Section: " + section
+                        + " | Teacher: " + teacher);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn);
+        }
+    }
 
     // CLOSE CONNECTION TO PREVENT LEAKS
     public static void closeConnection(Connection conn) {
