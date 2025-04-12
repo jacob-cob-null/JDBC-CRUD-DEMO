@@ -18,7 +18,6 @@ public class testDB {
         try {
             String url = "jdbc:sqlite:student.db";
             conn = DriverManager.getConnection(url);
-            System.out.println("Connected");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -115,6 +114,22 @@ public class testDB {
             closeConnection(conn);
         }
     }
+    public static void sum() {
+        Connection conn = connect();
+        String query = "SELECT SUM(StudentAge) as total FROM Student";
+        
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int sum = rs.getInt("total");
+                System.out.println(sum);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn);
+        }
+    }
 
     // UPDATE A RECORD
     public static void update(int id, String newName, int newAge, String newSection) {
@@ -187,7 +202,6 @@ public class testDB {
                         + " | Name: " + name
                         + " | Section: " + section
                         + " | Teacher: " + teacher);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
