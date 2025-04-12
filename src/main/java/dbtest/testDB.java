@@ -26,18 +26,19 @@ public class testDB {
     }
 
     // CREATING RECORD TO A FILE
-    public static void create(String name, int age) {
+    public static void create(String name, int age, String section) {
         Connection conn = connect();
-        String insertQuery = "INSERT INTO Student (studentName, studentAge) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO Student (studentName, studentAge, section) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, name);
             pstmt.setInt(2, age);
+            pstmt.setString(3, section);
             pstmt.executeUpdate();
 
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int studentID = generatedKeys.getInt(1);
-                Student student = new Student(studentID, name, age);
+                Student student = new Student(studentID, name, age, section);
                 Students.add(student);
             }
             System.out.println("Record inserted successfully!");
@@ -60,7 +61,8 @@ public class testDB {
                 int id = rs.getInt("studentID");
                 String name = rs.getString("studentName");
                 int age = rs.getInt("studentAge");
-                Student student = new Student(id, name, age);
+                String section = rs.getString("section");
+                Student student = new Student(id, name, age, section);
                 Students.add(student);
             }
             for (Student student : Students) {
@@ -74,14 +76,15 @@ public class testDB {
     }
 
     // UPDATE A RECORD
-    public static void update(int id, String newName, int newAge) {
+    public static void update(int id, String newName, int newAge, String newSection) {
         Connection conn = connect();
-        String updateQuery = "UPDATE Student SET studentName = ?, studentAge = ? WHERE studentID = ?";
+        String updateQuery = "UPDATE Student SET studentName = ?, studentAge = ?, section = ? WHERE studentID = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
             pstmt.setString(1, newName);
             pstmt.setInt(2, newAge);
-            pstmt.setInt(3, id);
+            pstmt.setString(3, newSection);
+            pstmt.setInt(4, id);
 
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
@@ -90,7 +93,7 @@ public class testDB {
                 System.out.println("Student with ID " + id + " not found.");
             }
 
-            Student updatedStudent = new Student(id, newName, newAge);
+            Student updatedStudent = new Student(id, newName, newAge, newSection);
             Students.add(updatedStudent);
         } catch (SQLException e) {
             e.printStackTrace();
