@@ -49,6 +49,24 @@ public class testDB {
         }
     }
 
+    // Retrieving only ID
+    public static void getStudentID() {
+        Connection conn = connect();
+        String query = "SELECT StudentID FROM Student";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("studentID");
+                System.out.println(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn);
+        }
+    }
+
     // READING ENTIRE TABLE
     public static void readTable() {
         Students.clear();
@@ -122,6 +140,7 @@ public class testDB {
             closeConnection(conn);
         }
     }
+    // JOIN TABLE AND GET ATTRIBUTE OF OTHER TABLE
 
     // CLOSE CONNECTION TO PREVENT LEAKS
     public static void closeConnection(Connection conn) {
