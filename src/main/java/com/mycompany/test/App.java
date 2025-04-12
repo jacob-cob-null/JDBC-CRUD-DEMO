@@ -32,8 +32,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        testDB.create(10004, "Laurence Punla", 19);
-        testDB.update(10003, "Trizy Gabriel Nicdao", 18);
+        testDB.readTable();
+        testDB.delete(999);
         testDB.readTable();
         launch();
     }
