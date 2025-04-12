@@ -32,9 +32,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        testDB.readTable();
-        testDB.getStudentID();
-        testDB.showJoinTable();
+        testDB.count();
         launch();
     }
 

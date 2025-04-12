@@ -93,6 +93,29 @@ public class testDB {
         }
     }
 
+    // Getting count
+    public static void count() {
+        Connection conn = connect();
+        String query = "SELECT COUNT(Student.StudentID) as total,\n"
+                + "       Student.section\n"
+                + "  FROM Student\n"
+                + "       JOIN\n"
+                + "       Section ON Student.section = Section.section\n"
+                + "   WHERE Student.section = \"LOYALTY\";";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt("total");
+                System.out.println(count);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn);
+        }
+    }
+
     // UPDATE A RECORD
     public static void update(int id, String newName, int newAge, String newSection) {
         Connection conn = connect();
